@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seven Qualities</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles for the qualities page display */
+        .qualities-grid {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .quality-reveal-box {
+            background-color: white;
+            padding: 25px;
+            margin-top: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-bottom: 5px solid var(--color-primary);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            text-align: left;
+        }
+        .quality-reveal-box h3 {
+            color: var(--color-secondary);
+            margin-bottom: 10px;
+        }
+        .quality-button {
+            margin: 5px;
+            background-color: var(--color-background);
+            color: var(--color-primary);
+            border: 2px solid var(--color-secondary);
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .quality-button:hover {
+            background-color: var(--color-secondary);
+            color: var(--color-background);
+        }
+    </style>
+</head>
+<body id="qualities-page">
+    <nav class="header-nav">
+        <a href="index.html">← Back to Heart Navigator</a>
+    </nav>
+
+    <div class="main-page page-content">
+        <h2>Seven Things I Love About My Man</h2>
+        <p>A few of the amazing qualities that make you my favorite person.</p>
+        
+        <div class="interactive-grid">
+            <button class="interactive-button quality-button" data-quality="1">View 1</button>
+            <button class="interactive-button quality-button" data-quality="2">View 2</button>
+            <button class="interactive-button quality-button" data-quality="3">View 3</button>
+            <button class="interactive-button quality-button" data-quality="4">View 4</button>
+            <button class="interactive-button quality-button" data-quality="5">View 5</button>
+            <button class="interactive-button quality-button" data-quality="6">View 6</button>
+            <button class="interactive-button quality-button" data-quality="7">View 7</button>
+        </div>
+
+        <div id="quality-reveal-box" class="quality-reveal-box hidden">
+            <h3 id="quality-title"></h3>
+            <p id="quality-detail"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // --- Logic for Qualities Page (must be here since it uses QUALITIES data) ---
+        if (document.getElementById('qualities-page')) {
+            const qualityButtons = document.querySelectorAll('.quality-button');
+            const revealBox = document.getElementById('quality-reveal-box');
+            const qualityTitle = document.getElementById('quality-title');
+            const qualityDetail = document.getElementById('quality-detail');
+
+            qualityButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const qualityNum = button.dataset.quality;
+                    const content = QUALITIES[qualityNum];
+                    
+                    qualityTitle.textContent = content.title;
+                    qualityDetail.innerHTML = content.detail; // Use innerHTML for bolding
+                    
+                    // Re-use fadeIn utility defined in script.js
+                    fadeIn(revealBox); 
+                });
+            });
+        }
+    </script>
+</body>
+</html>
