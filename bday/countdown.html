@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown to Us</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+            /* Simple styling for the steps */
+        }
+        .step-button {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 120px;
+            background-color: var(--color-background);
+            color: var(--color-primary);
+            border: 3px solid var(--color-secondary);
+            font-weight: 700;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            cursor: pointer;
+            padding: 10px;
+        }
+        .step-button:hover {
+            transform: translateY(-3px);
+            background-color: var(--color-secondary);
+            color: white;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        .step-number {
+            font-size: 2.5rem;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+        .step-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .countdown-reveal-box {
+            background-color: white;
+            padding: 30px;
+            margin-top: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-right: 5px solid var(--color-secondary);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            text-align: center;
+        }
+        .countdown-reveal-box h3 {
+            color: var(--color-primary);
+            margin-bottom: 10px;
+            font-size: 1.6rem;
+        }
+        /* Style for the powerful final step */
+        #step-7 {
+            grid-column: 1 / -1; /* Makes the last button span the entire row */
+            background-color: var(--color-primary);
+            color: white;
+            border-color: white;
+        }
+        #step-7 .step-number {
+            color: white;
+        }
+    </style>
+</head>
+<body id="countdown-page">
+    <nav class="header-nav">
+        <a href="index.html">← Back to Heart Navigator</a>
+    </nav>
+
+    <div class="main-page page-content">
+        <h2>The Countdown to Us: Bridging the Distance</h2>
+        <p>Seven steps that lead us closer together. Every tick of the clock is a victory, Hubby.</p>
+        
+        <div class="countdown-grid">
+            <button class="step-button interactive-button" data-step="1">
+                <span class="step-number">1</span>
+                <span class="step-text">Next Call</span>
+            </button>
+            <button class="step-button interactive-button" data-step="2">
+                <span class="step-number">2</span>
+                <span class="step-text">Ticket Search</span>
+            </button>
+            <button class="step-button interactive-button" data-step="3">
+                <span class="step-number">3</span>
+                <span class="step-text">The Packing</span>
+            </button>
+            <button class="step-button interactive-button" data-step="4">
+                <span class="step-number">4</span>
+                <span class="step-text">The Take-Off</span>
+            </button>
+            <button class="step-button interactive-button" data-step="5">
+                <span class="step-number">5</span>
+                <span class="step-text">The Arrival Hug</span>
+            </button>
+            <button class="step-button interactive-button" data-step="6">
+                <span class="step-number">6</span>
+                <span class="step-text">The Farewell</span>
+            </button>
+            <button class="step-button interactive-button" data-step="7" id="step-7">
+                <span class="step-number">7</span>
+                <span class="step-text">The Final Countdown</span>
+            </button>
+        </div>
+
+        <div id="countdown-reveal-box" class="countdown-reveal-box hidden">
+            <h3 id="countdown-title"></h3>
+            <p id="countdown-detail"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // --- Logic for Countdown Page (must be here since it uses COUNTDOWN_STEPS data) ---
+        if (document.getElementById('countdown-page')) {
+            const stepButtons = document.querySelectorAll('.step-button');
+            const revealBox = document.getElementById('countdown-reveal-box');
+            const countdownTitle = document.getElementById('countdown-title');
+            const countdownDetail = document.getElementById('countdown-detail');
+
+            stepButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const stepNum = button.dataset.step;
+                    // COUNTDOWN_STEPS must be defined in the global scope of script.js
+                    const content = COUNTDOWN_STEPS[stepNum];
+                    
+                    countdownTitle.textContent = content.title;
+                    countdownDetail.innerHTML = content.detail;
+                    
+                    fadeIn(revealBox); 
+                });
+            });
+        }
+    </script>
+</body>
+</html>
